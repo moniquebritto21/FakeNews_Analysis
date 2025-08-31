@@ -1,7 +1,8 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import sql from "mssql"
+import pkg from "mssql";
+const sql = pkg;
 const app = express();
 const port = 5000;
 app.use(express.json());
@@ -11,7 +12,7 @@ app.use(cors());
 const dbConfig = {
   user: "sa",
   password: "P@ssword321",
-  server: "localhost",  // use container IP if not localhost
+  server: "localhost",
   port: 1433,
   database: "master",   // or your database name
   options: {
