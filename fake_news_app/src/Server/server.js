@@ -1,46 +1,44 @@
 import cors from "cors";
-import dotenv from "dotenv";
 import express from "express";
-import pkg from "mssql";
-const sql = pkg;
+import sql from "mssql";
+import userRoutes from "../Routes/userRoute.js";
+
 const app = express();
 const port = 5000;
+var pool = sql;
+
 app.use(express.json());
 app.use(cors());
+
+app.listen(port, async () => {
+  console.log(`🚀 Server running at http://localhost:${port}`);
+  initDb();
+  app.use(userRoutes);
+});
 
 // Database config
 const dbConfig = {
   user: "sa",
-  password: "P@ssword321",
-  server: "localhost",
+  password: "YourStrong!Passw0rd",
+  server: "127.0.0.1",
   port: 1433,
-  database: "master",   // or your database name
+  database: "master",
   options: {
-    encrypt: false,     // disable if not using Azure
+    encrypt: false,
     trustServerCertificate: true,
   },
 };
-let pool;
+
 // Connect to DB
 async function initDb() {
   try {
     pool = await sql.connect(dbConfig);
-    console.log("✅ Connected to MSSQL");
+    console.log("Connected to MSSQL");
   } catch (err) {
-    console.error("❌ DB Connection Error:", err);
+    console.error("DB Connection Error:", err);
   }
 }
 
-app.get("/", async (req, res) => {
-  try {
-    const result = await pool.request().query("SELECT GETDATE() as currentTime");
-    res.json(result.recordset);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
+// Register routes after middleware
 
-app.listen(port, () => {
-  console.log(`🚀 Server running at http://localhost:${port}`);
-  initDb(); // connect when server starts
-});
+export { pool };

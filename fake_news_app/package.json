@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "connect": "nodemon ../server.js",
+    "connect": "nodemon src/server/server.js",
+    "initDb": "nodemon src/server/db.js",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -17,7 +18,9 @@
     "mssql": "^11.0.1",
     "nodemon": "^3.1.10",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-router": "^7.8.2",
+    "react-router-dom": "^7.8.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
